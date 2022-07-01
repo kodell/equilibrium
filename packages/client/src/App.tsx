@@ -1,8 +1,11 @@
 import { DataView } from './components/DataView';
+import { Layout } from './components/Layout';
 
 function App() {
   return (
-    <DataView />
+    <Layout>
+      <DataView />
+    </Layout>
   );
 }
 

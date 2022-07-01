@@ -1,9 +1,9 @@
-import { VictoryChart, VictoryTheme, VictoryLine, VictoryContainer } from "victory";
+import { VictoryChart, VictoryTheme, VictoryLine } from "victory";
 import { CoordinateData } from "../types";
 
-export const LineGraph = ({ data }: { data: CoordinateData }) => {
-    const maxTime = Math.max(30, data.length)
-    const minTime = Math.max(0, maxTime - 30)
+export const LineGraph = ({ data, timeScale }: { data: CoordinateData, timeScale: number }) => {
+    const maxTime = Math.max(timeScale, data.length)
+    const minTime = Math.max(0, maxTime - timeScale)
 
     return (
         <VictoryChart

@@ -18,5 +18,5 @@ export const DataView = () => {
         });
     }, [])
 
-    return <LineGraph data={coords} />
+    return <LineGraph data={coords} timeScale={30} />
 }
