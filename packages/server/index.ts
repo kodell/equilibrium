@@ -1,33 +1,39 @@
 import express from 'express';
+import cors from 'cors';
 import path from 'path';
 import http from 'http';
 import { Server } from 'socket.io';
 
+import { SineData } from './sineData';
+
 const PORT = process.env.PORT || 3030;
+const origin = ['http://localhost:3000', 'https://equilibrium-challenge.herokuapp.com']
 const clientPublicPath = path.join(process.cwd(), '../client/build')
 
 const app = express()
+  .use(cors({
+    origin,
+  }))
   .use(express.static(clientPublicPath))
 
 const httpServer = http.createServer(app)
-const io = new Server(httpServer)
+const io = new Server(httpServer, { cors: { origin }})
 
 io.on('connection', function (socket) {
-  console.log("Connected succesfully to the socket ...");
+  let sineData: SineData | null = new SineData()
 
-  var news = [
-      { title: 'The cure of the Sadness is to play Videogames',date:'04.10.2016'},
-      { title: 'Batman saves Racoon City, the Joker is infected once again',date:'05.10.2016'},
-      { title: "Deadpool doesn't want to do a third part of the franchise",date:'05.10.2016'},
-      { title: 'Quicksilver demand Warner Bros. due to plagiarism with Speedy Gonzales',date:'04.10.2016'},
-  ];
+  socket.emit('sine', { coordinates: sineData.coordinates })
+  const interval = setInterval(() => {
+    if (sineData) {
+      socket.emit('sine', { coordinates: sineData.addCoordinate() })
+    }
+  }, 1000)
 
-  // Send news on the socket
-  socket.emit('news', news);
-
-  socket.on('my other event', function (data) {
-      console.log(data);
-  });
+  socket.on('disconnect', () => {
+    clearInterval(interval)
+    sineData = null
+    console.log('Socket disconnect', { id: socket.id })
+  })
 });
 
 httpServer.listen(PORT, () => console.log(`Listening on ${PORT}`));
