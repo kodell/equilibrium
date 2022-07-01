@@ -1,0 +1,22 @@
+{
+  "name": "equilibrium",
+  "version": "0.1.0",
+  "description": "Equilibrium Energy take-home test",
+  "engines": {
+    "node": "16.x"
+  },
+  "workspaces": [
+    "packages/server",
+    "packages/client"
+  ],
+  "scripts": {
+    "start": "npm -w server start",
+    "dev": "npm run dev --ws",
+    "postinstall": "npm run build --ws"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kodell/equilibrium"
+  },
+  "license": "MIT"
+}
