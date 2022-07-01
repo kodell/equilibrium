@@ -10,7 +10,7 @@
     "packages/client"
   ],
   "scripts": {
-    "start": "npm -w server start",
+    "start": "npm -w server run start",
     "dev": "npm -w server run dev & npm -w client run start",
     "postinstall": "npm run build --ws"
   },

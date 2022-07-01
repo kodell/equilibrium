@@ -1,0 +1,1 @@
+export type CoordinateData = Array<{x: number, y: number}>
