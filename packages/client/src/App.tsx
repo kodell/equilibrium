@@ -1,11 +1,14 @@
+import { ChakraProvider } from '@chakra-ui/react';
 import { DataView } from './components/DataView';
 import { Layout } from './components/Layout';
 
 function App() {
   return (
-    <Layout>
-      <DataView />
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <DataView />
+      </Layout>
+    </ChakraProvider>
   );
 }
 

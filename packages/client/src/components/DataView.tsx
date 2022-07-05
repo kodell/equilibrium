@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
+import { Select } from '@chakra-ui/react'
 import styled from 'styled-components'
 import { io } from 'socket.io-client'
 
 import { useStore } from '../store'
+import { DataTable } from './DataTable'
 import { LineGraph } from './LineGraph'
 
 const SOCKET_PATH = process.env.NODE_ENV === 'development' ? 'localhost:3030' : '/'
@@ -28,19 +30,23 @@ export const DataView = () => {
                         <label htmlFor='timescale'>
                             Timescale:
                         </label>
-                        <select id='timescale' onChange={({ target: { value } }) => setTimeScale(parseInt(value))} value={timeScale}>
+                        <Select id='timescale'
+                            onChange={({ target: { value } }) => setTimeScale(parseInt(value))}
+                            value={timeScale}
+                            width={100}>
                             <option value={10}>10 sec</option>
                             <option value={30}>30 sec</option>
                             <option value={60}>60 sec</option>
                             <option value={90}>90 sec</option>
-                        </select>
+                        </Select>
                     </>
                 )}
                 <StyledButton onClick={toggleViewMode}>
                     {viewMode === 'graph' ? 'Show Table' : 'Show Graph'}
                 </StyledButton>
             </StyledControls>
-            <LineGraph />
+            {viewMode === 'graph' && <LineGraph />}
+            {viewMode === 'table' && <DataTable />}
         </>
     )
 }
